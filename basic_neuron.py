@@ -24,7 +24,6 @@ class Neuron():
             self.y = 1
         else:
             self.y = 0
-        print(self.y)
 
     def sigmoid_func(self):
         func = 1 / (1 + math.exp(-self.sum))
@@ -34,7 +33,6 @@ class Neuron():
             self.y = 0
         else:
             self.y = func
-        print(self.y)
 
     def clear_all(self):
         self.x = []
@@ -51,5 +49,7 @@ network.add_weights(-2, 5)
 network.summator()
 
 network.step_func()
+print(f'Step function: {network.y}')
 network.sigmoid_func()
+print(f'Sigmoid function: {network.y}')
 '''

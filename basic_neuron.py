@@ -36,16 +36,20 @@ class Neuron():
             self.y = func
         print(self.y)
 
-
-def test():
-    network = Neuron()
-    network.add_x(1, 1)
-    network.add_weights(-2, 5)
-
-    network.summator()
-
-    network.step_func(10)
-    network.sigmoid_func()
+    def clear_all(self):
+        self.x = []
+        self.w = []
+        self.sum = 0
+        self.y = 0
 
 
-# print(test())
+''' Test
+network = Neuron()
+network.add_x(1, 1)
+network.add_weights(-2, 5)
+
+network.summator()
+
+network.step_func()
+network.sigmoid_func()
+'''

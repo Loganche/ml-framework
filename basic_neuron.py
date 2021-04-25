@@ -14,11 +14,12 @@ class Neuron():
     def add_x(self, *args):
         self.x.extend(args)
 
-    def summator(self):
+    def summator(self, b=0):
         for i in range(len(self.x)):
             self.sum += self.x[i] * self.w[i]
+        self.sum += b
 
-    def activation_func(self, z):
+    def step_func(self, z=0):
         if self.sum >= z:
             self.y = 1
         else:
@@ -36,11 +37,15 @@ class Neuron():
         print(self.y)
 
 
-network = Neuron()
-network.add_x(1, 1)
-network.add_weights(-2, 5)
+def test():
+    network = Neuron()
+    network.add_x(1, 1)
+    network.add_weights(-2, 5)
 
-network.summator()
+    network.summator()
 
-network.activation_func(10)
-network.sigmoid_func()
+    network.step_func(10)
+    network.sigmoid_func()
+
+
+# print(test())

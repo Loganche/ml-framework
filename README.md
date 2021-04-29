@@ -13,3 +13,5 @@ Activation functions:
 Based on basic_neuron.py
 * NOT
 * AND
+* OR
+* XOR

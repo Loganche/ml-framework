@@ -1,13 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import basic_neuron as bn
-import logical_operations as lo
+
 import layer
 import activation
 
+'''
+ nn_basics
+    --basic_neuron.py
+    --logical_operations.py
 
-''' basic_neuron.py
+import nn_basics.basic_neuron as bn
+import nn_basics.logical_operations as lo
 
 network = bn.Neuron()
 network.add_x(1, 1)
@@ -19,9 +23,7 @@ network.step_func()
 print(f'Step function: {network.y}')
 network.sigmoid_func()
 print(f'Sigmoid function: {network.y}')
-'''
 
-'''  logical_operations.py
 
 operation = lo.LogicalOperations()
 
@@ -37,13 +39,13 @@ print(f'XOR: {operation.xor_func(0, 1)}')
 N = 20  # number of points per class
 D = 2  # dimensionality
 K = 3  # number of classes
-X = np.zeros((N*K, D))  # data matrix (each row = single example)
-y = np.zeros(N*K, dtype='uint8')  # class labels
+X = np.zeros((N * K, D))  # data matrix (each row = single example)
+y = np.zeros(N * K, dtype='uint8')  # class labels
 for j in range(K):
-    ix = range(N*j, N*(j+1))
+    ix = range(N * j, N * (j + 1))
     r = np.linspace(0.0, 1, N)  # radius
-    t = np.linspace(j*4, (j+1)*4, N) + np.random.randn(N)*0.2  # theta
-    X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
+    t = np.linspace(j * 4, (j + 1) * 4, N) + np.random.randn(N) * 0.2  # theta
+    X[ix] = np.c_[r * np.sin(t), r * np.cos(t)]
     y[ix] = j
 # lets visualize the data:
 plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)

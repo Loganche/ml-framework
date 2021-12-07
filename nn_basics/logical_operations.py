@@ -1,4 +1,4 @@
-import basic_neuron as bn
+import nn_basics.basic_neuron as bn
 
 
 class LogicalOperations():

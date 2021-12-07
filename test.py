@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 
 import layer
 import activation
+import loss
+import metric
 
 '''
  nn_basics
@@ -58,10 +60,14 @@ layer1 = layer.Layer_Dense(2, 4)
 activation1 = activation.Activation_LeakyReLU()
 layer2 = layer.Layer_Dense(4, 3)
 activation2 = activation.Activation_Softmax()
+loss1 = loss.Loss_CategoricalCrossEntropy()
+metric1 = metric.Metric_Accuracy()
 
 # Model Evaluation
 layer1.forward(X)  # FC layer
 activation1.forward(layer1.output)  # Non-linear fun
 layer2.forward(activation1.output)  # FC layer
 activation2.forward(layer2.output)  # Non-linear fun
-print(activation2.output)  # Results
+loss1.calculate(activation2.output, y)  # Loss fun
+print(f"Loss: {loss1.calculate(activation2.output, y)}")  # Results
+print(f"Accuracy: {metric1.calculate(activation2.output, y)}")  # Metrics

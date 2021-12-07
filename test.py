@@ -35,6 +35,7 @@ print(f'XOR: {operation.xor_func(0, 1)}')
 
 '''  layer.py activation.py '''
 
+# INPUT
 # https://cs231n.github.io/neural-networks-case-study/
 N = 20  # number of points per class
 D = 2  # dimensionality
@@ -54,11 +55,13 @@ plt.show()
 
 # Model Architecture
 layer1 = layer.Layer_Dense(2, 4)
-activation1 = activation.Activation_ReLU()
+activation1 = activation.Activation_LeakyReLU()
 layer2 = layer.Layer_Dense(4, 3)
+activation2 = activation.Activation_Softmax()
 
 # Model Evaluation
 layer1.forward(X)  # FC layer
 activation1.forward(layer1.output)  # Non-linear fun
 layer2.forward(activation1.output)  # FC layer
-print(layer2.output)  # Results
+activation2.forward(layer2.output)  # Non-linear fun
+print(activation2.output)  # Results

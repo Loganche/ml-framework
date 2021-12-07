@@ -10,13 +10,14 @@ class Loss:
 
 class Loss_CategoricalCrossEntropy(Loss):
     def forward(self, y_pred, y_true):
-        samples = len(y_pred)
-        y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7)
-
+        self.old_y_pred = np.clip(y_pred, 1e-8, 1 - 1e-8)
+        self.old_y_true = y_true
         if len(y_true.shape) == 1:
-            correct_confidences = y_pred_clipped[range(samples), y_true]
+            conf = self.old_y_pred[range(len(y_pred)), y_true]
         elif len(y_true.shape) == 2:
-            correct_confidences = np.sum(y_pred_clipped * y_true, axis=1)
+            conf = np.sum(self.old_y_pred * y_true, axis=1)
+        self.output = -np.log(conf)
+        return self.output
 
-        negative_log_likelihoods = -np.log(correct_confidences)
-        return negative_log_likelihoods
+    def backward(self):
+        self.grad = np.where(self.old_y_true == 1, -1 / self.old_y_pred, 0)

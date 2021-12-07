@@ -6,6 +6,7 @@ import layer
 import activation
 import loss
 import metric
+import data
 
 '''
  nn_basics
@@ -38,22 +39,14 @@ print(f'XOR: {operation.xor_func(0, 1)}')
 '''  layer.py activation.py '''
 
 # INPUT
-# https://cs231n.github.io/neural-networks-case-study/
-N = 20  # number of points per class
-D = 2  # dimensionality
-K = 3  # number of classes
-X = np.zeros((N * K, D))  # data matrix (each row = single example)
-y = np.zeros(N * K, dtype='uint8')  # class labels
-for j in range(K):
-    ix = range(N * j, N * (j + 1))
-    r = np.linspace(0.0, 1, N)  # radius
-    t = np.linspace(j * 4, (j + 1) * 4, N) + np.random.randn(N) * 0.2  # theta
-    X[ix] = np.c_[r * np.sin(t), r * np.cos(t)]
-    y[ix] = j
-# lets visualize the data:
-plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
-plt.show()
+X, y = data.data_spiral()
+y_onehot = data.one_hot(y)
 
+'''
+print(f"X: {X}")
+print(f"y: {y}")
+print(f"y_onehot: {y_onehot}")
+'''
 
 # Model Architecture
 layer1 = layer.Layer_Dense(2, 4)
@@ -65,9 +58,36 @@ metric1 = metric.Metric_Accuracy()
 
 # Model Evaluation
 layer1.forward(X)  # FC layer
+weights1 = layer1.weights
 activation1.forward(layer1.output)  # Non-linear fun
 layer2.forward(activation1.output)  # FC layer
 activation2.forward(layer2.output)  # Non-linear fun
-loss1.calculate(activation2.output, y)  # Loss fun
-print(f"Loss: {loss1.calculate(activation2.output, y)}")  # Results
+loss1.forward(activation2.output, y_onehot)  # Loss fun
+
+# print(f"Output: {activation2.output}")  # Results
+print(f"Loss: {np.mean(loss1.output)}")  # Loss
+print(f"Accuracy: {metric1.calculate(activation2.output, y)}")  # Metrics
+
+
+# Model Backpropogation
+loss1.backward()
+
+activation2.backward(loss1.grad)
+layer2.backward(activation2.grad)
+layer2.update()
+
+activation1.backward(layer2.grad)
+layer1.backward(activation1.grad)
+layer1.update()
+
+
+# Model Evaluation
+layer1.forward(X)  # FC layer
+activation1.forward(layer1.output)  # Non-linear fun
+layer2.forward(activation1.output)  # FC layer
+activation2.forward(layer2.output)  # Non-linear fun
+loss1.forward(activation2.output, y_onehot)  # Loss fun
+
+# print(f"Output: {activation2.output}")  # Results
+print(f"Loss: {np.mean(loss1.output)}")  # Loss
 print(f"Accuracy: {metric1.calculate(activation2.output, y)}")  # Metrics

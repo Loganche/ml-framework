@@ -1,5 +1,5 @@
-# ML Sandbox
-## Sandbox repo for ML and DL
+# ML Framework
+## Self-made Machine Learning Framework
 Author: Alexander Loginov \
 Links: [LinkedIn](linkedin.com/lxndr-loginov) [Telegram](t.me/Loganche)
 

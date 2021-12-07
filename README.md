@@ -19,10 +19,12 @@ Based on basic_neuron.py
 ---
 ## Neural Network Framework from Scratch
 ### layer.py
-Layers:
-* Dense
+Layers
 ### activation.py
-Activation functions:
-* ReLU
-* Sigmoid
-* Step
+Activation functions
+### loss.py
+Loss functions
+### metric.py
+Metrics
+### data.py
+Datasets and Visualisations
